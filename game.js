@@ -8,22 +8,40 @@ let player = {
   x: 100,
   y: 300,
   size: 30,
-  color: "blue"
+  color: "blue",
+  speed: 5
 };
+
+let keys = {};
+
+document.addEventListener("keydown", (e) => {
+  keys[e.key] = true;
+});
+
+document.addEventListener("keyup", (e) => {
+  keys[e.key] = false;
+});
 
 function drawPlayer() {
   ctx.fillStyle = player.color;
   ctx.fillRect(player.x, player.y, player.size, player.size);
 }
 
+function movePlayer() {
+  if (keys["ArrowRight"]) player.x += player.speed;
+  if (keys["ArrowLeft"]) player.x -= player.speed;
+
+  if (player.x < 0) player.x = 0;
+  if (player.x + player.size > canvas.width) {
+    player.x = canvas.width - player.size;
+  }
+}
+
 function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  movePlayer();
   drawPlayer();
   requestAnimationFrame(update);
 }
 
 update();
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") player.x += 10;
-  if (e.key === "ArrowLeft") player.x -= 10;
-});
