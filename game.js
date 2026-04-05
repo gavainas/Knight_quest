@@ -23,3 +23,7 @@ function update() {
 }
 
 update();
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") player.x += 10;
+  if (e.key === "ArrowLeft") player.x -= 10;
+});
